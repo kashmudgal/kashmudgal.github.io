@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title"></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --bg:           #f7f8fa;
+      --surface:      #ffffff;
+      --border:       #dde3ec;
+      --teal-dark:    #0e5f6e;
+      --teal-mid:     #1a8a9e;
+      --teal-light:   #e4f4f7;
+      --teal-accent:  #0bc4dc;
+      --text-primary: #1a2030;
+      --text-secondary: #4a5568;
+      --text-muted:   #8494a7;
+      --font-serif:   'Lora', Georgia, serif;
+      --font-sans:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --radius:       6px;
+      --max-w:        780px;
+      --transition:   0.22s ease;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal-dark); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--teal-mid); }
+
+    /* ============================================================
+       LAYOUT HELPERS
+    ============================================================ */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    section { padding: 72px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247,248,250,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-name {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .nav-links a:hover { color: var(--teal-dark); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      padding: 80px 0 68px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: start;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-mid);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .hero-tagline {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--teal-dark);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--teal-mid); color: #fff; }
+    .btn-outline {
+      background: transparent;
+      color: var(--teal-dark);
+      border: 1px solid var(--teal-dark);
+    }
+    .btn-outline:hover { background: var(--teal-light); }
+
+    /* Avatar */
+    .avatar-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--border);
+      background: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-initials {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--teal-dark);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       SECTION TITLES
+    ============================================================ */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal-mid);
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    .about-body {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+    }
+    .about-body p + p { margin-top: 16px; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .tag {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      border: 1px solid #b8dfe7;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       RESEARCH
+    ============================================================ */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: box-shadow var(--transition), border-color var(--transition);
+    }
+    .research-card:hover {
+      box-shadow: 0 4px 20px rgba(14,95,110,0.08);
+      border-color: #b8dfe7;
+    }
+    .research-icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+    }
+    .research-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    .research-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       PUBLICATIONS
+    ============================================================ */
+    .pub-list { display: flex; flex-direction: column; gap: 20px; }
+    .pub-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal-mid);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: box-shadow var(--transition);
+    }
+    .pub-item:hover { box-shadow: 0 3px 16px rgba(14,95,110,0.07); }
+    .pub-year {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--teal-mid);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .pub-title {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .pub-authors {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .pub-authors strong { color: var(--text-secondary); font-weight: 500; }
+    .pub-venue {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .pub-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pub-link {
+      font-size: 0.76rem;
+      font-weight: 500;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      color: var(--teal-dark);
+      border: 1px solid var(--teal-dark);
+      border-radius: 3px;
+      padding: 3px 10px;
+      transition: all var(--transition);
+    }
+    .pub-link:hover { background: var(--teal-dark); color: #fff; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .contact-intro {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .contact-link-item a { color: var(--teal-dark); font-weight: 500; }
+    .contact-link-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .contact-detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .contact-detail h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    .contact-detail p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 600px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .avatar-wrap { width: 80px; height: 80px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗
+    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝
+    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
+    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
+    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
+     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
+
+     Edit ONLY the CONFIG object below.
+     Everything else updates automatically.
+============================================================ -->
+
+<script>
+const CONFIG = {
+
+  /* ----------------------------------------------------------
+     IDENTITY
+  ---------------------------------------------------------- */
+  name:         "Ashutosh Kumar",
+  initials:     "AK",           // shown in avatar if no photo
+  photo:        "",             // URL to a photo, or leave "" for initials
+  position:     "Doctoral researcher",
+  department:   "Department of Biology",
+  university:   "University of Fribourg",
+  email:        "ashutosh.kumar@unifr.ch",
+
+  /* ----------------------------------------------------------
+     NAV  –  which sections to show in the navbar
+  ---------------------------------------------------------- */
+  nav: ["About", "Research", "Publications", "Contact"],
+
+  /* ----------------------------------------------------------
+     HERO TAGLINE  –  one punchy sentence shown under your name
+  ---------------------------------------------------------- */
+  tagline: "Studying how cells make decisions — from molecular motors to tissue-scale dynamics.",
+
+  /* ----------------------------------------------------------
+     EXTERNAL LINKS
+     Set the URL, or leave "" to hide the button
+  ---------------------------------------------------------- */
+  links: {
+    scholar:   "",   // e.g. "https://scholar.google.com/citations?user=XXXX"
+    github:    "",   // e.g. "https://github.com/yourusername"
+    twitter:   "",   // e.g. "https://twitter.com/yourusername"
+    linkedin:  "",   // e.g. "https://linkedin.com/in/yourusername"
+    orcid:     "",   // e.g. "https://orcid.org/0000-0000-0000-0000"
+    cv:        "",   // e.g. "/cv.pdf"
+  },
+
+  /* ----------------------------------------------------------
+     ABOUT
+     paragraphs: array of strings, each becomes a <p>
+     keywords:   shown as tags below the bio
+  ---------------------------------------------------------- */
+  about: {
+    paragraphs: [
+      "I am a final-year PhD candidate in computational biophysics, broadly interested in understanding how molecular-scale processes give rise to emergent cell behaviour.",
+      "My work sits at the intersection of physics, biology, and computation — combining molecular dynamics simulations, coarse-grained modelling, and data-driven analysis to study problems like membrane organisation, cytoskeletal dynamics, and cell signalling.",
+      "Before my PhD I studied [your undergraduate background]. Outside the lab I enjoy [a hobby or two].",
+    ],
+    keywords: [
+      "Molecular Dynamics",
+      "Coarse-Grained Modelling",
+      "Membrane Biophysics",
+      "Cell Signalling",
+      "Python / NumPy",
+      "GROMACS",
+    ],
+  },
+
+  /* ----------------------------------------------------------
+     RESEARCH  –  up to ~4 cards
+     icon: any emoji
+  ---------------------------------------------------------- */
+  research: [
+    {
+      icon: "🧬",
+      title: "Membrane Organisation",
+      description: "How lipid composition and protein crowding shape the lateral organisation of biological membranes at physiological conditions.",
+    },
+    {
+      icon: "⚙️",
+      title: "Cytoskeletal Dynamics",
+      description: "Mechanistic modelling of actin and microtubule networks — how stochastic polymerisation drives cell shape change.",
+    },
+    {
+      icon: "📡",
+      title: "Signalling & Noise",
+      description: "Exploring how cells achieve robust decisions despite molecular-level stochasticity using stochastic simulations and information theory.",
+    },
+    {
+      icon: "🔬",
+      title: "Methods Development",
+      description: "Building open-source analysis pipelines for trajectory data from MD simulations and live-cell imaging experiments.",
+    },
+  ],
+
+  /* ----------------------------------------------------------
+     PUBLICATIONS
+     authors: use "**Your Name**" (double asterisks) to bold yourself
+     links: object of label → URL pairs; remove any you don't need
+  ---------------------------------------------------------- */
+  publications: [
+    {
+      year: "2024",
+      title: "Title of your most recent paper goes here",
+      authors: "**Your Name**, Co-Author A, Co-Author B, Supervisor Name",
+      venue: "Journal of Computational Biology, 21(4), 2024",
+      links: {
+        "PDF":     "",
+        "DOI":     "",
+        "GitHub":  "",
+      },
+    },
+    {
+      year: "2023",
+      title: "Title of another paper or preprint",
+      authors: "Co-Author A, **Your Name**, Co-Author C",
+      venue: "bioRxiv preprint, 2023",
+      links: {
+        "Preprint": "",
+        "Code":     "",
+      },
+    },
+    {
+      year: "2022",
+      title: "Earlier publication or conference paper",
+      authors: "**Your Name**, Supervisor Name",
+      venue: "Biophysical Journal, 119(3), 2022",
+      links: {
+        "DOI": "",
+      },
+    },
+  ],
+
+  /* ----------------------------------------------------------
+     CONTACT
+     affiliation: displayed in the address card
+  ---------------------------------------------------------- */
+  contact: {
+    intro: "I'm happy to chat about research, collaborations, or PhD opportunities. The best way to reach me is by email.",
+    affiliation: [
+      "Your Lab Name",
+      "Department of Biophysics",
+      "Your University",
+      "City, Country",
+    ],
+  },
+
+};
+</script>
+
+<!-- ============================================================
+     RENDERED HTML  — do not edit below unless changing design
+============================================================ -->
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name" id="nav-name"></span>
+    <ul class="nav-links" id="nav-links"></ul>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid fade-in">
+        <div>
+          <p class="hero-eyebrow" id="hero-eyebrow"></p>
+          <h1 id="hero-name"></h1>
+          <p class="hero-tagline" id="hero-tagline"></p>
+          <div class="hero-links" id="hero-links"></div>
+        </div>
+        <div class="avatar-wrap" id="avatar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container fade-in">
+      <p class="section-label">About</p>
+      <h2>Background</h2>
+      <div class="about-body" id="about-body"></div>
+      <div class="tags" id="about-tags"></div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container fade-in">
+      <p class="section-label">Research</p>
+      <h2>What I Work On</h2>
+      <div class="research-grid" id="research-grid"></div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="container fade-in">
+      <p class="section-label">Publications</p>
+      <h2>Selected Works</h2>
+      <div class="pub-list" id="pub-list"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container fade-in">
+      <p class="section-label">Contact</p>
+      <h2>Get in Touch</h2>
+      <div class="contact-grid">
+        <div>
+          <p class="contact-intro" id="contact-intro"></p>
+          <div class="contact-links" id="contact-links"></div>
+        </div>
+        <div class="contact-detail">
+          <h3>Affiliation</h3>
+          <p id="contact-affiliation"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p id="footer-text"></p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     RENDERER  — reads CONFIG, writes DOM
+============================================================ -->
+<script>
+(function () {
+  const C = CONFIG;
+
+  /* helpers */
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs = {}, html = "") => {
+    const e = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+    if (html) e.innerHTML = html;
+    return e;
+  };
+
+  /* page title */
+  document.title = `${C.name} — ${C.position}`;
+
+  /* nav */
+  $("nav-name").textContent = C.name;
+  C.nav.forEach(label => {
+    const li = document.createElement("li");
+    const a  = el("a", { href: `#${label.toLowerCase()}` }, label);
+    li.appendChild(a);
+    $("nav-links").appendChild(li);
+  });
+
+  /* hero eyebrow */
+  $("hero-eyebrow").textContent = `${C.position} · ${C.university}`;
+  $("hero-name").textContent    = C.name;
+  $("hero-tagline").textContent = C.tagline;
+
+  /* hero links */
+  const linkDefs = [
+    { key: "scholar",  label: "Scholar",  icon: "◎" },
+    { key: "github",   label: "GitHub",   icon: "⌥" },
+    { key: "twitter",  label: "Twitter",  icon: "✦" },
+    { key: "linkedin", label: "LinkedIn", icon: "⬡" },
+    { key: "orcid",    label: "ORCID",    icon: "⊕" },
+    { key: "cv",       label: "CV / Résumé", icon: "↓" },
+  ];
+  linkDefs.forEach(({ key, label, icon }) => {
+    const url = C.links[key];
+    if (!url) return;
+    const a = el("a", { href: url, target: "_blank", class: key === "cv" ? "btn btn-primary" : "btn btn-outline" },
+      `${icon} ${label}`);
+    $("hero-links").appendChild(a);
+  });
+  /* email button always shown */
+  const emailBtn = el("a", { href: `mailto:${C.email}`, class: "btn btn-outline" }, `✉ Email`);
+  $("hero-links").appendChild(emailBtn);
+
+  /* avatar */
+  const avatarEl = $("avatar");
+  if (C.photo) {
+    avatarEl.innerHTML = `<img src="${C.photo}" alt="${C.name}" />`;
+  } else {
+    avatarEl.innerHTML = `<span class="avatar-initials">${C.initials}</span>`;
+  }
+
+  /* about */
+  const aboutBody = $("about-body");
+  C.about.paragraphs.forEach(p => {
+    aboutBody.appendChild(el("p", {}, p));
+  });
+  const tagsEl = $("about-tags");
+  C.about.keywords.forEach(kw => {
+    tagsEl.appendChild(el("span", { class: "tag" }, kw));
+  });
+
+  /* research */
+  const grid = $("research-grid");
+  C.research.forEach(r => {
+    grid.appendChild(el("div", { class: "research-card" },
+      `<div class="research-icon">${r.icon}</div>
+       <h3>${r.title}</h3>
+       <p>${r.description}</p>`
+    ));
+  });
+
+  /* publications */
+  const pubList = $("pub-list");
+  C.publications.forEach(pub => {
+    const linksHtml = Object.entries(pub.links)
+      .filter(([, url]) => url)
+      .map(([label, url]) => `<a class="pub-link" href="${url}" target="_blank">${label}</a>`)
+      .join("");
+    const authorsHtml = pub.authors.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    pubList.appendChild(el("div", { class: "pub-item" },
+      `<p class="pub-year">${pub.year}</p>
+       <p class="pub-title">${pub.title}</p>
+       <p class="pub-authors">${authorsHtml}</p>
+       <p class="pub-venue">${pub.venue}</p>
+       ${linksHtml ? `<div class="pub-links">${linksHtml}</div>` : ""}`
+    ));
+  });
+
+  /* contact */
+  $("contact-intro").textContent = C.contact.intro;
+  const clEl = $("contact-links");
+  // email
+  clEl.innerHTML = `<div class="contact-link-item">
+    <span class="contact-link-label">email</span>
+    <a href="mailto:${C.email}">${C.email}</a>
+  </div>`;
+  linkDefs.forEach(({ key, label }) => {
+    const url = C.links[key];
+    if (!url) return;
+    clEl.innerHTML += `<div class="contact-link-item">
+      <span class="contact-link-label">${label.toLowerCase()}</span>
+      <a href="${url}" target="_blank">${url.replace("https://","")}</a>
+    </div>`;
+  });
+  $("contact-affiliation").innerHTML = C.contact.affiliation.join("<br>");
+
+  /* footer */
+  $("footer-text").textContent = `© ${new Date().getFullYear()} ${C.name} · Built with care`;
+
+  /* scroll fade-in observer */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>
